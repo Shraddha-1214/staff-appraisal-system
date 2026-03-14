@@ -11,6 +11,12 @@ const FacultyProfile = new Schema({
         type: String,
         required: true
     },
+    grade_pay: {
+         type: String 
+    }, 
+    last_promotion: {
+         type: String 
+    },
     department: {
         type: String,
         required: true

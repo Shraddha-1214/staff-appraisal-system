@@ -1,9 +1,5 @@
-if(process.env.NODE_ENV === 'production') {
-    module.exports = {
-        mongoURI: 'mongodb+srv://user:'+process.env.DBPASS+'@appraisal-db-8wrlx.mongodb.net/test'
-    }
-} else {
-    module.exports = {
-        mongoURI: 'mongodb://localhost/staff-db'
-    }
-}
+// config/database.js
+module.exports = {
+  // This tells the app to use the link from your .env file
+  mongoURI: process.env.MONGO_URI || 'mongodb://localhost:27017/staff-db'
+};

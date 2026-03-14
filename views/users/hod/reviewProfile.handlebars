@@ -1,0 +1,54 @@
+<div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+    <div class="card white" style="border-top: 8px solid #b71c1c; border-radius: 8px;">
+        <div class="card-content">
+            <span class="right badge blue white-text" style="font-size: 1rem; padding: 5px 15px;">Pending Approval</span>
+            <h4 style="color: #003366; font-weight: bold;">Review Appraisal: {{faculty.name}}</h4>
+            <p class="grey-text">Department: {{faculty.department}} | Academic Year: 2024-25</p>
+            <br>
+
+            <ul class="collapsible popout">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons blue-text">school</i>Part I: Teaching & Student Feedback</div>
+                    <div class="collapsible-body">
+                        <span>Faculty Claimed: <b>50 / 50 Points</b></span>
+                        <p>Includes System Programming (40/45 classes) and Student Feedback scores[cite: 9, 11].</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons green-text">biotech</i>Part II & III: Research & Trainings</div>
+                    <div class="collapsible-body">
+                        <span>Faculty Claimed: <b>35 Points</b></span>
+                        <p>Includes ATAL FDP and 4 Conference Publications[cite: 24, 36].</p>
+                    </div>
+                </li>
+            </ul>
+
+            <form action="/users/hod/approve/{{faculty._id}}" method="POST" style="margin-top: 30px;">
+                <div class="input-field">
+                    <i class="material-icons prefix">comment</i>
+                    <textarea name="hod_remarks" class="materialize-textarea" placeholder="Add remarks for the faculty member..."></textarea>
+                    <label>HOD Remarks</label>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col s6">
+                        <button type="submit" name="status" value="approved" class="btn-large green darken-2" style="width: 100%;">
+                            <i class="material-icons left">check_circle</i> APPROVE & SIGN
+                        </button>
+                    </div>
+                    <div class="col s6">
+                        <button type="submit" name="status" value="rejected" class="btn-large red darken-2" style="width: 100%;">
+                            <i class="material-icons left">assignment_return</i> RETURN FOR CORRECTION
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.collapsible').collapsible();
+    });
+</script>

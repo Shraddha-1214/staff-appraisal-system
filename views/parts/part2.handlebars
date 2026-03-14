@@ -1,0 +1,66 @@
+<div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+    <div class="card white" style="border-top: 5px solid #003366; border-radius: 8px;">
+        <div class="card-content">
+            <h4 class="center-align" style="color: #003366; font-weight: bold;">Part II: Trainings Undergone</h4>
+            <p class="center-align grey-text">Faculty Development Programs (FDP)</p>
+            <br>
+
+            <form action="/part2/save-fdp" method="POST">
+                <table class="highlight centered responsive-table">
+                    <thead>
+                        <tr style="background-color: #f5f5f5; color: #003366;">
+                            <th>Title of Program</th>
+                            <th>Organized by</th>
+                            <th>Dates (From - To)</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" name="title[]" value="ATAL FDP on Sustainable Technologies for Advancing SDGs"></td>
+                            <td><input type="text" name="organized_by[]" value="Anil Neerukonda Institute Of Technology & Sciences"></td>
+                            <td><input type="text" name="dates[]" value="16/12/2024 TO 21/12/2024"></td>
+                            <td><input type="text" name="duration[]" value="1 WEEK"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="title[]" placeholder="Enter Title"></td>
+                            <td><input type="text" name="organized_by[]" placeholder="Institute Name"></td>
+                            <td><input type="text" name="dates[]" placeholder="DD/MM/YYYY to DD/MM/YYYY"></td>
+                            <td><input type="text" name="duration[]" placeholder="e.g. 1 Week"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top: 20px;">
+                    <button type="submit" class="btn blue darken-4">Save FDP Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card white" style="margin-top: 30px; border-radius: 8px;">
+        <div class="card-content">
+            <span class="card-title" style="color: #003366; font-weight: bold;">MOOC Courses (NPTEL-AICTE)</span>
+            <form action="/part2/save-mooc" method="POST">
+                <table class="centered">
+                    <thead>
+                        <tr>
+                            <th>Course Title</th>
+                            <th>Dates</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" name="mooc_title[]"></td>
+                            <td><input type="text" name="mooc_dates[]"></td>
+                            <td><input type="text" name="mooc_duration[]"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top: 10px;">
+                    <button type="submit" class="btn grey darken-3">Save MOOC</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

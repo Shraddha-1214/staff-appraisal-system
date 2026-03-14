@@ -1,71 +1,109 @@
 {{#if_eq user.type 'hod'}}
-<h3>HoD Profile Page</h3>
+<h4 class="blue-text text-darken-4">HoD Profile & Department Records</h4>
 <hr>
-<div class="row">
-  {{#each hod_profile}}
 
-  <div class="col s12 m12">
-    <div class="card darken-1">
-      <table class="striped">
-        <tbody>
-          <tr>
-            <td class="card-title">Name:</td>
-            <td class="card-title">{{hod_name}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Designation:</td>
-            <td class="card-title">{{designation}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Department:</td>
-            <td class="card-title">{{department}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Qualification:</td>
-            <td class="card-title">{{qualification}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Teaching experience:</td>
-            <td class="card-title">{{teaching_exp}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Nature of appointment:</td>
-            <td class="card-title">{{appointment}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Date of joining:</td>
-            <td class="card-title">{{date_of_join}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Date of birth:</td>
-            <td class="card-title">{{DOB}}</td>
-          </tr>
-          <tr>
-            <td class="card-title">Salary:</td>
-            <td class="card-title">{{salary}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="card-action purple">
-        <a href="/profile/hod/edit/{{id}}" class="white-text">Edit Profile</a>
-      </div>
+<div class="row">
+    {{#each hod_profile}}
+    <div class="col s12 m12">
+        <div class="card white" style="border-top: 5px solid #003366;">
+            <div class="card-content">
+                <span class="card-title" style="color: #003366; font-weight: bold;">HoD Personal Details</span>
+                <table class="striped">
+                    <tbody>
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td>{{hod_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Designation:</b></td>
+                            <td>{{designation}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Department:</b></td>
+                            <td>{{department}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Qualification:</b></td>
+                            <td>{{qualification}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Experience:</b></td>
+                            <td>{{teaching_exp}} Years</td>
+                        </tr>
+                        <tr>
+                            <td><b>Nature of Appointment:</b></td>
+                            <td>{{appointment}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Date of Joining:</b></td>
+                            <td>{{date_of_join}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Date of Birth:</b></td>
+                            <td>{{DOB}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Salary:</b></td>
+                            <td>{{salary}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-action" style="background-color: #f5f5f5;">
+                <a href="/profile/hod/edit/{{id}}" class="blue-text text-darken-4" style="font-weight: bold;">Update HoD Profile</a>
+            </div>
+        </div>
     </div>
-  </div>
+    {{else}}
+    <div class="col s12 center-align" style="margin-top: 20px;">
+        <div class="card-panel">
+            <p class="flow-text">HoD Profile information is missing.</p>
+            <a href="/profile/hod/addProfile" class="waves-effect waves-light btn-large" style="background-color: #003366;">Add HoD Profile</a>
+        </div>
+    </div>
+    {{/each}}
 </div>
+
+<div class="row">
+    <div class="col s12">
+        <div class="card white" style="border-top: 5px solid #003366;">
+            <div class="card-content">
+                <span class="card-title" style="color: #003366; font-weight: bold;">
+                    <i class="fa fa-folder-open"></i> My Personal Appraisal Logs
+                </span>
+                <table class="highlight">
+                    <thead>
+                        <tr style="color: #003366;">
+                            <th>Academic Year</th>
+                            <th class="center-align">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if history}}
+                            {{#each history}}
+                            <tr>
+                                <td><b>{{academic_year}}</b></td>
+                                <td class="center-align">
+                                    <a href="/users/hod/home" class="btn-small" style="background-color: #003366;">View Department Dashboard</a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        {{else}}
+                            <tr>
+                                <td colspan="2" class="center-align grey-text">No records found.</td>
+                            </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{else}}
-<div class="container">
-  <p>Profile not added.</p>
-  <a href="/profile/hod/addProfile" class="waves-effect waves-light btn btn-large center">Add Profile</a>
+<div class="container center-align">
+    <h5 class="red-text">Access Denied</h5>
+    <p>HoD Credentials Required.</p>
+    <a href="/" class="btn" style="background-color: #003366;">Back to Home</a>
 </div>
-</div>
-{{/each}}
-</div>
-{{else}}
-<p>Not Authorized</p>
-</div>
-{{#if_eq user.type 'hod'}}
-<p>Welcome HOD</p>
-{{else}}
 {{/if_eq}}
-{{/if_eq}}
-</div>

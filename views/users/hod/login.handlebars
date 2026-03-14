@@ -1,32 +1,38 @@
-<div class="row">
-    <div class="col s12 m12">
-        <div class="container">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-title">
-                        <b>HOD Login Page</b>
-                    </div>
-                    <form method="post" action="/users/hod/login/">
-                        <div class="row">
-                            <div class="input-field s12 m4 l8">
-                                <input id="email" type="email" name="email" class="validate">
-                                <label for="email">HOD Email ID</label>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="input-field s12 m4 l8">
-                                <input id="password" type="password" name="password" class="validate">
-                                <label for="password">Password</label>
-                            </div>
-                        </div>
-
-                        <button class="btn waves-effect waves-light" type="submit" id="submit_btn">Submit</button>
-                        <a href="/forgot/hod" class="purple-text right">Forgot your password!?</a>
-                    </form>
+<div class="row" style="margin-top: 50px;">
+    <div class="col s12 m6 offset-m3">
+        <div class="card white" style="border-top: 5px solid #1a237e; border-radius: 8px;">
+            <div class="card-content">
+                <div class="center-align">
+                    <img src="/img/logo.png" alt="WIT Logo" style="width: 80px;">
+                    <h5 style="color: #1a237e; font-weight: bold;">HOD Login Portal</h5>
+                    <p class="grey-text">Annual Self-Assessment System</p>
                 </div>
-            </div>
+                <br>
+                
+                <form method="POST" action="/users/hod/login">
+                    <div class="input-field">
+                        <i class="material-icons prefix">email</i>
+                        <input id="email" type="email" name="email" class="validate" required>
+                        <label for="email">HOD Email ID</label>
+                    </div>
 
+                    <div class="input-field">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="password" type="password" name="password" class="validate" required>
+                        <label for="password">Password</label>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn-large waves-effect waves-light" type="submit" id="submit_btn" style="background-color: #1a237e; width: 100%;">
+                            Login as HOD
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 20px;" class="center-align">
+                        <a href="/forgot/hod" class="purple-text">Forgot your password?</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

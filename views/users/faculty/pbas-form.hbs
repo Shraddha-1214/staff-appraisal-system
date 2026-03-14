@@ -1,0 +1,29 @@
+<div class="container">
+    <h2 style="color: #003366; text-align: center;">WALCHAND INSTITUTE OF TECHNOLOGY, SOLAPUR</h2>
+    <h4 style="text-align: center;">Part-I: Teaching Process (Max 25 Points)</h4>
+
+    <form action="/part1/save" method="POST"></form>
+        <input type="hidden" name="academicYear" value="{{academicYear}}">
+        <table class="table table-bordered">
+            <thead style="background-color: #003366; color: white;">
+                <tr>
+                    <th>Semester</th>
+                    <th>Course Code/Name</th>
+                    <th>Scheduled Classes</th>
+                    <th>Actually Held</th>
+                    <th>Enclosure No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="semester" class="form-control" placeholder="Sem-I"></td>
+                    <td><input type="text" name="courseName" class="form-control" placeholder="System Programming"></td>
+                    <td><input type="number" name="scheduled" class="form-control"></td>
+                    <td><input type="number" name="held" class="form-control"></td>
+                    <td><input type="text" name="enclosure" class="form-control"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary" style="background-color: #003366;">Save Data</button>
+    </form>
+</div>

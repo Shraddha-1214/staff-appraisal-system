@@ -1,63 +1,51 @@
-
-<h5>HoD Page</h5>
-<h6>Marks of each faculty assessed by HoD(module wise)</h6>
-<br>
-
-<form action="/users/hod/search" method="post">
+<div class="container" style="margin-top: 30px;">
     <div class="row">
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s4 l5">
-                    <input id="email" name="filterEmail" value="{{fltEmail}}" type="text">
-                    <label for="email">Email ID</label>
-                </div>
-                <div class="input-field col s4 l5">
-                    <input id="academic_year" name="academic_year" value="{{academicYear}}" type="text">
-                    <label for="academic_year">Academic Year</label>
-                </div>
-                <div class="input-field col s4 l2">
-                    <button class="btn waves-effect waves-light purple" type="submit"><i class="fa fa-search white-text" aria-hidden="true"></i>&nbsp; Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</form>
+        <div class="col s12">
+            <h4 class="indigo-text text-darken-4">Department Faculty Appraisals</h4>
+            <p>Reviewing appraisals for: <b>{{dept}} Department</b></p>
+            <br>
 
-<table class="highlight centered responsive-table">
-    <thead>
-        <tr>
-            <th>Faculty Name</th>
-            <th>Faculty Email ID</th>
-            <th>Academic (H.|F.)</th>
-            <th>Leave Record (H.|F.)</th>
-            <th>annexure 1 (H.|F.)</th>
-            <th>Academic 2 (H.|F.)</th>
-            <th>Academic 3 (H.|F.)</th>
-            <th>Confidential</th>
-            <th>Academic Year</th>
-        </tr>
-    </thead>
-    <tbody>
-    {{#if result}}
-    {{#each result}}
-    
-        <tr>
-            <td>{{faculty_name}}</td>
-            <td>{{faculty_email}}</td>
-            <td>{{academicPerformance}} | {{facultyAP}}</td>
-            <td>{{leaveRecord}} | {{facultyLeave}}</td>
-            <td>{{annexure_1}} | {{facultyA1}}</td>
-            <td>{{annexure_2}} | {{facultyA2}}</td>
-            <td>{{annexure_3}} | {{facultyA3}}</td>
-            <td>{{confidential}}</td>
-            <td>{{academic_year}}</td>
-        </tr>
-    
-    {{/each}}
-    </tbody>
-</table>
-{{else}}
-</tbody>
-</table>
-{{/if}}
-<br><br><br><br><br>
+            <table class="highlight centered bordered responsive-table white card" style="border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background-color: #1a237e; color: white;">
+                        <th>Faculty Name</th>
+                        <th>Academic Year</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if appraisals.length}}
+                        {{#each appraisals}}
+                        <tr>
+                            <td><b style="color: #1a237e;">{{this.user.name}}</b></td>
+                            <td>{{this.academic_year}}</td>
+                            <td>
+                                {{#if_eq this.status 'Submitted'}}
+                                    <span class="badge orange white-text" style="float:none; border-radius:4px;">Pending Review</span>
+                                {{else}}
+                                    <span class="badge blue-grey lighten-4" style="float:none; border-radius:4px;">{{this.status}}</span>
+                                {{/if_eq}}
+                            </td>
+                            <td>
+                                <a href="/summary/review/{{this.user._id}}/{{this.academic_year}}" 
+                                   class="btn waves-effect waves-light indigo darken-4 {{#if_eq this.status 'Draft'}}disabled{{/if_eq}}">
+                                    <i class="material-icons left">visibility</i> REVIEW
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <td colspan="4" class="center-align grey-text">No faculty records found for this department.</td>
+                        </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 20px;">
+                <a href="/users/hod/hodOverview" class="btn-flat indigo-text"><i class="material-icons left">arrow_back</i> Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>

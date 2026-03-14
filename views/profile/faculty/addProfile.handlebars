@@ -1,64 +1,143 @@
-<h4>Staff Information Form</h4>
-<hr><br>
-<div class="row">
-    <form action="/profile/faculty" method="post" class="col s12">
-        <div class="row">
-            <div class="input-field col s6">
-                <input id="faculty_name" type="text" name="faculty_name" class="validate" required>
-                <label for="faculty_name">Full Name</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="designation" type="text" name="designation" class="validate" required>
-                <label for="designation">Designation</label>
-            </div>
+<div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+    <div class="card white" style="border-top: 8px solid #003366; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+        <div class="card-content">
+            <h4 class="center-align" style="color: #003366; font-weight: bold;">Faculty Profile Setup</h4>
+            <p class="center-align grey-text">Complete your professional details as per the PBAS requirements.</p>
+            <br>
+
+            <form action="/profile/faculty" method="POST">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="text" name="faculty_name" id="faculty_name" value="{{user.name}}" required>
+                        <label for="faculty_name" class="active">Full Name</label>
+                    </div>
+
+                    <div class="col s12 m6">
+                        <label style="color: #003366; font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px;">Department</label>
+                        <select name="department" class="browser-default" style="width: 100%; height: 45px; border: none; border-bottom: 1px solid #9e9e9e; background-color: transparent; cursor: pointer;" required>
+                            <option value="" disabled selected>Choose Dept</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="E&TC">E&TC</option>
+                            <option value="ECE">ECE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col s12 m4">
+                        <label style="color: #003366; font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px;">Designation</label>
+                        <select name="designation" class="browser-default" style="width: 100%; height: 45px; border: none; border-bottom: 1px solid #9e9e9e; background-color: transparent; cursor: pointer;" required>
+                            <option value="" disabled selected>Select Designation</option>
+                            <option value="Assistant Professor">Assistant Professor</option>
+                            <option value="Associate Professor">Associate Professor</option>
+                            <option value="Professor">Professor</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s12 m4">
+                        <input type="text" name="grade_pay" id="grade_pay" value="7 PAY" required>
+                        <label for="grade_pay" class="active">Current Grade Pay</label>
+                    </div>
+                    <div class="input-field col s12 m4">
+                        <input type="text" name="last_promotion" id="last_promotion" value="NA">
+                        <label for="last_promotion" class="active">Date of Last Promotion</label>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="input-field col s12 m4">
+                        <input type="text" name="qualification" id="qualification" required>
+                        <label for="qualification">Qualification</label>
+                    </div>
+                    <div class="input-field col s12 m4">
+                        <input type="number" name="teaching_exp" id="teaching_exp" required>
+                        <label for="teaching_exp">Experience (Years)</label>
+                    </div>
+                    <div class="input-field col s12 m4">
+                        <input type="number" name="salary" id="salary" required>
+                        <label for="salary">Basic Salary (Numeric)</label>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="input-field col s12 m4">
+                        <input type="text" name="date_of_join" class="datepicker" id="doj" placeholder="dd/mm/yyyy" required>
+                        <label for="doj" class="active">Date of Joining</label>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <label style="color: #003366; font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px;">Appointment Type</label>
+                        <select name="appointment" class="browser-default" style="width: 100%; height: 45px; border: none; border-bottom: 1px solid #9e9e9e; background-color: transparent; cursor: pointer;" required>
+                            <option value="" disabled selected>Select Type</option>
+                            <option value="Permanent">Permanent</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Contractual">Contractual</option>
+                            <option value="Ad-hoc">Ad-hoc</option>
+                            <option value="Probation">Probation</option>
+                            <option value="Visiting">Visiting</option>
+                        </select>
+                    </div>
+
+                    <div class="input-field col s12 m4">
+                        <input type="text" name="DOB" class="datepicker" id="dob" placeholder="dd/mm/yyyy" required>
+                        <label for="dob" class="active">Date of Birth</label>
+                    </div>
+                </div>
+
+                <div class="center-align" style="margin-top: 40px;">
+                    <button type="submit" class="btn-large" style="width: 100%; background-color: #003366 !important; border-radius: 5px; font-weight: bold;">
+                        SAVE PROFILE & PROCEED
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <select name="department">
-                    <option value="" disabled selected>Department</option>
-                    <option value="Information Technology">Information Technology</option>
-                    <option value="Computer Engineering">Computer Engineering</option>
-                    <option value="Mechanical Engineering">Mechanical Engineering</option>
-                    <option value="Civil Engineering">Civil Engineering</option>
-                    <option value="EXTC Engineering">EXTC Engineering</option>
-                </select>
-            </div>
-            <div class="input-field col s6">
-                <input id="qualification" type="text" name="qualification" class="validate" required>
-                <label for="qualification">Qualification</label>
-            </div>
-            
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input id="teaching_exp" type="number" name="teaching_exp" class="validate" required>
-                <label for="teaching_exp">Teaching Exp.</label>
-            </div>
-            <div class="input-field col s6">
-                    <select name="appointment">
-                        <option value="" disabled selected>Appointment</option>
-                        <option value="Adhoc">Adhoc</option>
-                        <option value="Probationer">Probationer</option>
-                        <option value="Permanent">Permanent</option>
-                    </select>
-            </div>
-        </div>
-        <div class="row">
-            
-            <div class="input-field col s4">
-                <input id="date_of_join" type="text" name="date_of_join" class="datepicker validate" required>
-                <label for="date_of_join">Date of joining</label>
-            </div>
-            <div class="input-field col s4">
-                <input id="DOB" type="text" name="DOB" class="datepicker validate" required>
-                <label for="DOB">Date of birth</label>
-            </div>
-            <div class="input-field col s4">
-                <input id="salary" type="number" name="salary" class="validate" required>
-                <label for="salary">Present salary</label>
-            </div>
-        </div>
-        <button class="btn waves-effect waves-light darken-3" type="submit">Submit
-        </button>
-    </form>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. DATE OF BIRTH: Focused on older years (1960 - 2010)
+        var dobElem = document.querySelector('#dob');
+        M.Datepicker.init(dobElem, {
+            format: 'dd/mm/yyyy',
+            autoClose: true,
+            setDefaultDate: true,
+            defaultDate: new Date(1990, 0, 1), // Opens at 1990
+            yearRange: [1960, 2010],           // Range: 1960 to 2010
+            container: document.body
+        });
+
+        // 2. DATE OF JOINING: Focused on career years (2000 - 2026)
+        var dojElem = document.querySelector('#doj');
+        M.Datepicker.init(dojElem, {
+            format: 'dd/mm/yyyy',
+            autoClose: true,
+            setDefaultDate: true,
+            defaultDate: new Date(2020, 0, 1), // Opens at 2020
+            yearRange: [2000, 2026],           // Range: 2000 to 2026
+            container: document.body
+        });
+
+        // 3. Keep labels in place
+        M.updateTextFields();
+    });
+</script>
+<style>
+    /* Clean Styling for Browser Default Selects */
+    select.browser-default {
+        border-bottom: 1px solid #9e9e9e !important;
+    }
+    select.browser-default:focus {
+        outline: none;
+        border-bottom: 2px solid #003366 !important;
+    }
+    .input-field input:focus + label {
+        color: #003366 !important;
+    }
+    .input-field input:focus {
+        border-bottom: 2px solid #003366 !important;
+        box-shadow: 0 1px 0 0 #003366 !important;
+    }
+</style>

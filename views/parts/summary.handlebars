@@ -1,0 +1,66 @@
+<div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+    <div class="card-panel white" style="border: 2px solid #1a237e; border-radius: 8px; padding: 40px;">
+        <div class="center-align">
+            <h4 style="color: #1a237e; font-weight: bold; margin-bottom: 5px;">Walchand Institute of Technology, Solapur</h4>
+            <h5 style="color: #1a237e; margin-top: 0;">PBAS Self-Assessment Summary Report</h5>
+            <h6 class="grey-text text-darken-2">Academic Year: <b>{{year}}</b></h6>
+        </div>
+        
+        <div class="divider" style="margin: 20px 0;"></div>
+
+        <table class="striped bordered highlight" style="margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #f5f5f5; color: #1a237e;">
+                    <th style="font-size: 1.1rem;">Assessment Category</th>
+                    <th class="center-align" style="font-size: 1.1rem;">Max Score</th>
+                    <th class="center-align" style="font-size: 1.1rem;">Earned Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Part I: Teaching-Learning & Evaluation</td>
+                    <td class="center-align">25</td>
+                    <td class="center-align"><b>{{totalP1}}</b></td>
+                </tr>
+                <tr>
+                    <td>Part II: Research, Publications & Academic Contributions</td>
+                    <td class="center-align">-</td>
+                    <td class="center-align"><b>{{totalP2}}</b></td>
+                </tr>
+                <tr>
+                    <td>Part III: Innovation, Extension & Consultancy</td>
+                    <td class="center-align">-</td>
+                    <td class="center-align"><b>{{totalP3}}</b></td>
+                </tr>
+                <tr>
+                    <td>Part IV: Administrative & Professional Development</td>
+                    <td class="center-align">-</td>
+                    <td class="center-align"><b>{{totalP4}}</b></td>
+                </tr>
+                <tr style="background-color: #e8eaf6; font-size: 1.3rem;">
+                    <td><b style="color: #1a237e;">TOTAL CONSOLIDATED API SCORE</b></td>
+                    <td class="center-align">-</td>
+                    <td class="center-align"><b class="indigo-text text-darken-4">{{grandTotal}}</b></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row" style="margin-top: 50px;">
+            <div class="col s12 center-align no-print">
+                <button onclick="window.print()" class="btn-large indigo darken-4 waves-effect waves-light">
+                    <i class="material-icons left">picture_as_pdf</i> EXPORT SUMMARY (PRINT)
+                </button>
+                <br><br>
+                <a href="/users/faculty/facultyOverview" class="btn-flat grey-text">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .no-print, .navbar, .footer, .btn-large { display: none !important; }
+        body { background-color: white !important; }
+        .card-panel { border: none !important; box-shadow: none !important; }
+    }
+</style>
