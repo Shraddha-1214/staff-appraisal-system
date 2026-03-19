@@ -3,14 +3,13 @@ const bcrypt = require('bcryptjs');
 require('./models/Users/ManagerDB'); // Ensure this matches your admin model file path
 const Manager = mongoose.model('management_user');
 
-// Replace with your MongoDB URI from your config/database.js
-const db = 'mongodb://localhost:27017/wit_pbas'; 
+const db = 'mongodb://localhost:27017/staff-db'; 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const newAdmin = new Manager({
             name: 'System Admin',
-            email: 'admin@wit.edu.in',
+            email: 'admin@gmail.com',
             password: 'admin', 
             type: 'manager'
         });
