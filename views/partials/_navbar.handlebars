@@ -12,13 +12,12 @@
         <ul class="right hide-on-med-and-down">
           {{#if_eq user.type 'faculty'}}
             <li><a href="/users/faculty/facultyOverview">Dashboard</a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="wit-parts">Appraisal Parts<i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a href="/leave">Leave</a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="profile"><i class="material-icons">account_circle</i></a></li>
+            <li><a href="/appraisal/form">Appraisal Form</a></li>
+            <li><a href="/users/logout">Logout</a></li>
           {{/if_eq}}
 
           {{#if_eq user.type 'hod'}}
-            <li><a href="/users/hod/home">HOD Home</a></li>
+            <li><a href="/users/hod/hodOverview">HOD Home</a></li>
             <li><a href="/users/hod/appraisalList">Appraisal List</a></li>
             <li><a class="dropdown-trigger" href="#!" data-target="profile-hod"><i class="material-icons">account_circle</i></a></li>
           {{/if_eq}}
@@ -35,19 +34,6 @@
           {{/unless}}
         </ul>
 
-        <ul id="wit-parts" class="dropdown-content">
-          <li><a href="/part1/view/{{year}}" class="black-text">Part I: Teaching Process</a></li>
-          <li><a href="/part2/view/{{year}}" class="black-text">Part II: Trainings (FDP)</a></li>
-          <li><a href="/part3/view/{{year}}" class="black-text">Part III: Research</a></li>
-          <li><a href="/part4/view/{{year}}" class="black-text">Part IV: Innovation</a></li>
-          <li class="divider"></li>
-          <li><a href="/summary/view/{{year}}" class="black-text">Final Summary Report</a></li>
-        </ul>
-
-        <ul id="profile" class="dropdown-content">
-          <li><a href="/profile/faculty/index" class="black-text">My Profile</a></li>
-          <li><a href="/users/logout" class="black-text">Logout</a></li>
-        </ul>
         <ul id="profile-hod" class="dropdown-content">
           <li><a href="/users/hod/registerFaculty" class="black-text">Register Faculty</a></li>
           <li><a href="/users/logout" class="black-text">Logout</a></li>
@@ -61,19 +47,14 @@
   <li>
     <div class="user-view" style="background-color: #003366; padding: 30px;">
         <span class="white-text name">WIT Solapur</span>
-        <span class="white-text email">PBAS Portal 2024-25</span>
+        <span class="white-text email">PBAS Portal</span>
     </div>
   </li>
   {{#if_eq user.type 'faculty'}}
-    <li><a href="/faculty/facultyOverview"><i class="material-icons">dashboard</i>Dashboard</a></li>
+    <li><a href="/users/faculty/facultyOverview"><i class="material-icons">dashboard</i>Dashboard</a></li>
+    <li><a href="/appraisal/form"><i class="material-icons">assignment</i>Appraisal Form</a></li>
     <li><div class="divider"></div></li>
-    <li><a class="subheader">Appraisal Parts</a></li>
-    <li><a href="/part1/view">Part I: Teaching</a></li>
-    <li><a href="/part2/view">Part II: Trainings</a></li>
-    <li><a href="/part3/view">Part III: Research</a></li>
-    <li><a href="/part4/view">Part IV: Innovation</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="/users/logout">Logout</a></li>
+    <li><a href="/users/logout"><i class="material-icons">exit_to_app</i>Logout</a></li>
   {{/if_eq}}
   
   {{#unless user}}
@@ -81,4 +62,3 @@
     <li><a href="/users/faculty/login">Faculty Login</a></li>
   {{/unless}}
 </ul>
-

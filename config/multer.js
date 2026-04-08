@@ -1,7 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 
-// Set Storage Engine
+// 1. Set Storage Engine
 const storage = multer.diskStorage({
     destination: './public/uploads/',
     filename: function(req, file, cb) {
@@ -10,16 +10,16 @@ const storage = multer.diskStorage({
     }
 });
 
-// Initialize Upload
-const upload = multer({
+// 2. Initialize Multer Instance (The Engine)
+const multerInstance = multer({
     storage: storage,
     limits: { fileSize: 5000000 }, // Max 5MB per file
     fileFilter: function(req, file, cb) {
         checkFileType(file, cb);
     }
-}).single('proofDocument'); // Match the 'name' attribute in your form
+});
 
-// Check File Type
+// 3. Check File Type
 function checkFileType(file, cb) {
     // Allowed extensions for WIT PBAS
     const filetypes = /jpeg|jpg|png|pdf/;
@@ -33,4 +33,5 @@ function checkFileType(file, cb) {
     }
 }
 
-module.exports = upload;
+// 4. Export the .array() middleware (Supports up to 20 files at once)
+module.exports = multerInstance.array('proofDocument', 20);

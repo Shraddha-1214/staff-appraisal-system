@@ -1,0 +1,498 @@
+<style>
+    :root { --pbas-primary: #1a237e; --pbas-border: #dee2e6; }
+    .section-card { border-radius: 8px; margin-bottom: 35px; border: 1px solid var(--pbas-border); box-shadow: none; }
+    .form-header { background: var(--pbas-primary); color: white; padding: 12px 20px; border-radius: 7px 7px 0 0; font-size: 0.95rem; }
+    .table-input { border: 1px solid #ccc !important; border-radius: 3px !important; padding: 4px 8px !important; height: 30px !important; font-size: 0.85rem !important; width: 100%; }
+    th { background: #f8f9fa; color: #37474f; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--pbas-border) !important; padding: 10px 8px !important; }
+    .part-divider { margin: 50px 0 25px 0; border-left: 4px solid var(--pbas-primary); padding-left: 15px; color: var(--pbas-primary); font-weight: 700; text-transform: uppercase; }
+    .save-btn { background: var(--pbas-primary) !important; text-transform: none; font-weight: 500; }
+    .add-btn { color: var(--pbas-primary); font-weight: 600; cursor: pointer; }
+</style>
+
+<div class="container" style="width: 96%;">
+    <div class="center-align" style="margin-bottom: 30px;">
+        <h4 style="font-weight: 800; color: var(--pbas-primary);">Annual Self-Assessment PBAS Form</h4>
+        <p class="grey-text">Academic Year: <b>{{year}}</b> | Status: <span class="chip">{{appraisal.status}}</span></p>
+    </div>
+
+    <h5 class="part-divider">Part I: AICTE 360 Degree Feedback</h5>
+    
+    <div class="card section-card">
+        <div class="form-header">1.1 Teaching Process</div>
+        <div class="card-content">
+            <form action="/appraisal/save-teaching" method="POST">
+                <table id="table1_1" class="highlight">
+                    <thead><tr><th>Sem</th><th>Course</th><th>Type</th><th>Scheduled</th><th>Held</th><th>Encl No</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.teachingProcess}}
+                        <tr>
+                            <td><input type="text" name="teachingProcess[{{@index}}][semester]" value="{{this.semester}}" class="table-input"></td>
+                            <td><input type="text" name="teachingProcess[{{@index}}][courseName]" value="{{this.courseName}}" class="table-input"></td>
+                            <td><input type="text" name="teachingProcess[{{@index}}][type]" value="{{this.type}}" class="table-input"></td>
+                            <td><input type="number" name="teachingProcess[{{@index}}][scheduledClasses]" value="{{this.scheduledClasses}}" class="table-input"></td>
+                            <td><input type="number" name="teachingProcess[{{@index}}][heldClasses]" value="{{this.heldClasses}}" class="table-input"></td>
+                            <td><input type="text" name="teachingProcess[{{@index}}][enclosureNo]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table1_1')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 1.1</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">1.2 Student Feedback</div>
+        <div class="card-content">
+            <form action="/appraisal/save-feedback" method="POST">
+                <table id="table1_2" class="highlight">
+                    <thead><tr><th>Sem</th><th>Course Name</th><th>Avg Feedback</th><th>Encl No</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.studentFeedback}}
+                        <tr>
+                            <td><input type="text" name="studentFeedback[{{@index}}][semester]" value="{{this.semester}}" class="table-input"></td>
+                            <td><input type="text" name="studentFeedback[{{@index}}][courseName]" value="{{this.courseName}}" class="table-input"></td>
+                            <td><input type="number" step="0.01" name="studentFeedback[{{@index}}][avgFeedback]" value="{{this.avgFeedback}}" class="table-input"></td>
+                            <td><input type="text" name="studentFeedback[{{@index}}][enclosureNo]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table1_2')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 1.2</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">1.3 Departmental Activities</div>
+        <div class="card-content">
+            <form action="/appraisal/save-dept" method="POST">
+                <table id="table1_3" class="highlight">
+                    <thead><tr><th>Sem</th><th>Activity</th><th>Encl No</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.deptActivities}}
+                        <tr>
+                            <td><input type="text" name="deptActivities[{{@index}}][semester]" value="{{this.semester}}" class="table-input"></td>
+                            <td><input type="text" name="deptActivities[{{@index}}][activity]" value="{{this.activity}}" class="table-input"></td>
+                            <td><input type="text" name="deptActivities[{{@index}}][enclosureNo]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table1_3')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 1.3</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">1.4 Institute Activities</div>
+        <div class="card-content">
+            <form action="/appraisal/save-inst" method="POST">
+                <table id="table1_4" class="highlight">
+                    <thead><tr><th>Sem</th><th>Activity</th><th>Encl No</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.instActivities}}
+                        <tr>
+                            <td><input type="text" name="instActivities[{{@index}}][semester]" value="{{this.semester}}" class="table-input"></td>
+                            <td><input type="text" name="instActivities[{{@index}}][activity]" value="{{this.activity}}" class="table-input"></td>
+                            <td><input type="text" name="instActivities[{{@index}}][enclosureNo]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table1_4')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 1.4</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">1.5 Contribution to Society</div>
+        <div class="card-content">
+            <form action="/appraisal/save-society" method="POST">
+                <table id="table1_5" class="highlight">
+                    <thead><tr><th>Sem</th><th>Activity</th><th>Encl No</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.societyActivities}}
+                        <tr>
+                            <td><input type="text" name="societyActivities[{{@index}}][semester]" value="{{this.semester}}" class="table-input"></td>
+                            <td><input type="text" name="societyActivities[{{@index}}][activity]" value="{{this.activity}}" class="table-input"></td>
+                            <td><input type="text" name="societyActivities[{{@index}}][enclosureNo]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table1_5')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 1.5</button></div>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="part-divider">Part II: Trainings Undergone</h5>
+    
+    <div class="card section-card">
+        <div class="form-header">2.1 Faculty Development Programs</div>
+        <div class="card-content">
+            <form action="/appraisal/save-fdp" method="POST">
+                <table id="table2_1" class="highlight">
+                    <thead><tr><th>Title</th><th>Organized By</th><th>From</th><th>To</th><th>Weeks</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.fdpTrainings}}
+                        <tr>
+                            <td><input type="text" name="fdpTrainings[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="fdpTrainings[{{@index}}][organizedBy]" value="{{this.organizedBy}}" class="table-input"></td>
+                            <td><input type="date" name="fdpTrainings[{{@index}}][fromDate]" value="{{this.fromDate}}" class="table-input"></td>
+                            <td><input type="date" name="fdpTrainings[{{@index}}][toDate]" value="{{this.toDate}}" class="table-input"></td>
+                            <td><input type="number" name="fdpTrainings[{{@index}}][duration]" value="{{this.duration}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table2_1')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 2.1</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">2.2 MOOC Courses (NPTEL-AICTE)</div>
+        <div class="card-content">
+            <form action="/appraisal/save-mooc" method="POST">
+                <table id="table2_2" class="highlight">
+                    <thead><tr><th>Course Title</th><th>From</th><th>To</th><th>Weeks</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.moocCourses}}
+                        <tr>
+                            <td><input type="text" name="moocCourses[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="date" name="moocCourses[{{@index}}][fromDate]" value="{{this.fromDate}}" class="table-input"></td>
+                            <td><input type="date" name="moocCourses[{{@index}}][toDate]" value="{{this.toDate}}" class="table-input"></td>
+                            <td><input type="number" name="moocCourses[{{@index}}][duration]" value="{{this.duration}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table2_2')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 2.2</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">2.3 Industrial / Professional Training</div>
+        <div class="card-content">
+            <form action="/appraisal/save-industrial" method="POST">
+                <table id="table2_3" class="highlight">
+                    <thead><tr><th>Industry/Institute</th><th>From</th><th>To</th><th>Weeks</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.industrialTrainings}}
+                        <tr>
+                            <td><input type="text" name="industrialTrainings[{{@index}}][organization]" value="{{this.organization}}" class="table-input"></td>
+                            <td><input type="date" name="industrialTrainings[{{@index}}][fromDate]" value="{{this.fromDate}}" class="table-input"></td>
+                            <td><input type="date" name="industrialTrainings[{{@index}}][toDate]" value="{{this.toDate}}" class="table-input"></td>
+                            <td><input type="number" name="industrialTrainings[{{@index}}][duration]" value="{{this.duration}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table2_3')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 2.3</button></div>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="part-divider">Part III: Research & Academic Contributions</h5>
+    
+    <div class="card section-card">
+        <div class="form-header">3.1 Research Publications (Journals)</div>
+        <div class="card-content">
+            <form action="/appraisal/save-publications" method="POST">
+                <table id="table3_1" class="highlight">
+                    <thead><tr><th>Title</th><th>Journal Name</th><th>ISSN/ISBN</th><th>Year</th><th>Indexing</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.researchPublications}}
+                        <tr>
+                            <td><input type="text" name="researchPublications[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="researchPublications[{{@index}}][journal]" value="{{this.journal}}" class="table-input"></td>
+                            <td><input type="text" name="researchPublications[{{@index}}][issn]" value="{{this.issn}}" class="table-input"></td>
+                            <td><input type="number" name="researchPublications[{{@index}}][year]" value="{{this.year}}" class="table-input"></td>
+                            <td><input type="text" name="researchPublications[{{@index}}][indexing]" value="{{this.indexing}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_1')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.1</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.2 Publications other than Journal Articles</div>
+        <div class="card-content">
+            <form action="/appraisal/save-other-pubs" method="POST">
+                <table id="table3_2" class="highlight">
+                    <thead><tr><th>Title</th><th>Conference/Book</th><th>ISSN/ISBN</th><th>Author No.</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.otherPublications}}
+                        <tr>
+                            <td><input type="text" name="otherPublications[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="otherPublications[{{@index}}][bookTitle]" value="{{this.bookTitle}}" class="table-input"></td>
+                            <td><input type="text" name="otherPublications[{{@index}}][issn]" value="{{this.issn}}" class="table-input"></td>
+                            <td><input type="number" name="otherPublications[{{@index}}][authorNo]" value="{{this.authorNo}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_2')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.2</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.3 Sponsored Research Projects</div>
+        <div class="card-content">
+            <form action="/appraisal/save-projects" method="POST">
+                <table id="table3_3" class="highlight">
+                    <thead><tr><th>Title</th><th>Agency</th><th>Amount (Lakhs)</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.sponsoredProjects}}
+                        <tr>
+                            <td><input type="text" name="sponsoredProjects[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="sponsoredProjects[{{@index}}][agency]" value="{{this.agency}}" class="table-input"></td>
+                            <td><input type="number" step="0.01" name="sponsoredProjects[{{@index}}][amount]" value="{{this.amount}}" class="table-input"></td>
+                            <td><input type="text" name="sponsoredProjects[{{@index}}][status]" value="{{this.status}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_3')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.3</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.4 Consultancy Projects</div>
+        <div class="card-content">
+            <form action="/appraisal/save-consultancy" method="POST">
+                <table id="table3_4" class="highlight">
+                    <thead><tr><th>Title</th><th>Agency</th><th>Amount (Lakhs)</th><th>Outcome</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.consultancyProjects}}
+                        <tr>
+                            <td><input type="text" name="consultancyProjects[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="consultancyProjects[{{@index}}][agency]" value="{{this.agency}}" class="table-input"></td>
+                            <td><input type="number" step="0.01" name="consultancyProjects[{{@index}}][amount]" value="{{this.amount}}" class="table-input"></td>
+                            <td><input type="text" name="consultancyProjects[{{@index}}][outcome]" value="{{this.outcome}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_4')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.4</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.5 Patents</div>
+        <div class="card-content">
+            <form action="/appraisal/save-patents" method="POST">
+                <table id="table3_5" class="highlight">
+                    <thead><tr><th>Title</th><th>Patent No.</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.patents}}
+                        <tr>
+                            <td><input type="text" name="patents[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="patents[{{@index}}][patentNo]" value="{{this.patentNo}}" class="table-input"></td>
+                            <td><input type="date" name="patents[{{@index}}][date]" value="{{this.date}}" class="table-input"></td>
+                            <td><input type="text" name="patents[{{@index}}][status]" value="{{this.status}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_5')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.5</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.6 Research Guidance (M.Tech/Ph.D)</div>
+        <div class="card-content">
+            <form action="/appraisal/save-guidance" method="POST">
+                <table id="table3_6" class="highlight">
+                    <thead><tr><th>Level</th><th>Enrolled</th><th>Thesis Submitted</th><th>Awarded</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.researchGuidance}}
+                        <tr>
+                            <td><input type="text" name="researchGuidance[{{@index}}][level]" value="{{this.level}}" class="table-input"></td>
+                            <td><input type="number" name="researchGuidance[{{@index}}][enrolled]" value="{{this.enrolled}}" class="table-input"></td>
+                            <td><input type="number" name="researchGuidance[{{@index}}][submitted]" value="{{this.submitted}}" class="table-input"></td>
+                            <td><input type="number" name="researchGuidance[{{@index}}][awarded]" value="{{this.awarded}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_6')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.6</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">3.7 Fellowships / Awards / Invited Lectures</div>
+        <div class="card-content">
+            <form action="/appraisal/save-awards" method="POST">
+                <table id="table3_7" class="highlight">
+                    <thead><tr><th>Title/Award</th><th>Organized By</th><th>Level (Int/Nat)</th><th>Date</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.awardsLectures}}
+                        <tr>
+                            <td><input type="text" name="awardsLectures[{{@index}}][title]" value="{{this.title}}" class="table-input"></td>
+                            <td><input type="text" name="awardsLectures[{{@index}}][organizedBy]" value="{{this.organizedBy}}" class="table-input"></td>
+                            <td><input type="text" name="awardsLectures[{{@index}}][level]" value="{{this.level}}" class="table-input"></td>
+                            <td><input type="date" name="awardsLectures[{{@index}}][date]" value="{{this.date}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table3_7')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 3.7</button></div>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="part-divider">Part IV: Innovative Teaching & E-Learning</h5>
+    
+    <div class="card section-card">
+        <div class="form-header">4.1 Innovative Teaching Methodologies</div>
+        <div class="card-content">
+            <form action="/appraisal/save-innovative" method="POST">
+                <table id="table4_1" class="highlight">
+                    <thead><tr><th>Course</th><th>Methodology (e.g. PBL)</th><th>Remark</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.innovativeTeaching}}
+                        <tr>
+                            <td><input type="text" name="innovativeTeaching[{{@index}}][course]" value="{{this.course}}" class="table-input"></td>
+                            <td><input type="text" name="innovativeTeaching[{{@index}}][method]" value="{{this.method}}" class="table-input"></td>
+                            <td><input type="text" name="innovativeTeaching[{{@index}}][remark]" value="{{this.remark}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table4_1')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 4.1</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card section-card">
+        <div class="form-header">4.2 Development of E-Learning Material</div>
+        <div class="card-content">
+            <form action="/appraisal/save-e-learning" method="POST">
+                <table id="table4_2" class="highlight">
+                    <thead><tr><th>Details of Material</th><th>Remark</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.elearningMaterial}}
+                        <tr>
+                            <td><input type="text" name="elearningMaterial[{{@index}}][details]" value="{{this.details}}" class="table-input"></td>
+                            <td><input type="text" name="elearningMaterial[{{@index}}][remark]" value="{{this.remark}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table4_2')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save 4.2</button></div>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="part-divider">Part V: Other Relevant Information</h5>
+    
+    <div class="card section-card">
+        <div class="form-header">5.1 Other Credentials / Awards</div>
+        <div class="card-content">
+            <form action="/appraisal/save-other-info" method="POST">
+                <table id="table5_1" class="highlight">
+                    <thead><tr><th>Details (Year, Value etc)</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.otherInfo}}
+                        <tr>
+                            <td><input type="text" name="otherInfo[{{@index}}][details]" value="{{this.details}}" class="table-input"></td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:10px;"><span class="add-btn" onclick="addRow('table5_1')">+ Add Row</span> <button type="submit" class="btn save-btn ml-2">Save Part V</button></div>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="part-divider">Part VI: List of Enclosures</h5>
+    <div class="card section-card">
+        <div class="form-header">Upload All Certificates & Papers</div>
+        <div class="card-content">
+            <form action="/appraisal/save-enclosures" method="POST" enctype="multipart/form-data">
+                <table id="enclosureTable" class="highlight">
+                    <thead><tr><th style="width:10%">Encl No</th><th style="width:40%">Description</th><th style="width:40%">File (PDF/JPG)</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.generalEnclosures}}
+                        <tr>
+                            <td><input type="text" name="enclosureNos[]" value="{{this.enclosureNo}}" class="table-input"></td>
+                            <td><input type="text" name="enclosureDescriptions[]" value="{{this.description}}" class="table-input"></td>
+                            <td>
+                                {{#if this.fileUrl}}
+                                    <input type="hidden" name="existingUrls[]" value="{{this.fileUrl}}">
+                                    <a href="{{this.fileUrl}}" target="_blank" class="indigo-text"><b>View Attached File</b></a>
+                                {{else}}
+                                    <input type="file" name="proofDocument" class="table-input" style="border:none;">
+                                {{/if}}
+                            </td>
+                            <td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="right-align" style="margin-top:20px;"><span class="add-btn" onclick="addRow('enclosureTable')">+ Add File Slot</span> <button type="submit" class="btn save-btn ml-2">Upload All</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addRow(tableId) {
+        const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+        const index = table.rows.length;
+        let html = '';
+
+        const templates = {
+            table1_1: `<tr><td><input type="text" name="teachingProcess[${index}][semester]" class="table-input"></td><td><input type="text" name="teachingProcess[${index}][courseName]" class="table-input"></td><td><input type="text" name="teachingProcess[${index}][type]" class="table-input"></td><td><input type="number" name="teachingProcess[${index}][scheduledClasses]" value="0" class="table-input"></td><td><input type="number" name="teachingProcess[${index}][heldClasses]" value="0" class="table-input"></td><td><input type="text" name="teachingProcess[${index}][enclosureNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table1_2: `<tr><td><input type="text" name="studentFeedback[${index}][semester]" class="table-input"></td><td><input type="text" name="studentFeedback[${index}][courseName]" class="table-input"></td><td><input type="number" step="0.01" name="studentFeedback[${index}][avgFeedback]" class="table-input"></td><td><input type="text" name="studentFeedback[${index}][enclosureNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table1_3: `<tr><td><input type="text" name="deptActivities[${index}][semester]" class="table-input"></td><td><input type="text" name="deptActivities[${index}][activity]" class="table-input"></td><td><input type="text" name="deptActivities[${index}][enclosureNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table1_4: `<tr><td><input type="text" name="instActivities[${index}][semester]" class="table-input"></td><td><input type="text" name="instActivities[${index}][activity]" class="table-input"></td><td><input type="text" name="instActivities[${index}][enclosureNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table1_5: `<tr><td><input type="text" name="societyActivities[${index}][semester]" class="table-input"></td><td><input type="text" name="societyActivities[${index}][activity]" class="table-input"></td><td><input type="text" name="societyActivities[${index}][enclosureNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table2_1: `<tr><td><input type="text" name="fdpTrainings[${index}][title]" class="table-input"></td><td><input type="text" name="fdpTrainings[${index}][organizedBy]" class="table-input"></td><td><input type="date" name="fdpTrainings[${index}][fromDate]" class="table-input"></td><td><input type="date" name="fdpTrainings[${index}][toDate]" class="table-input"></td><td><input type="number" name="fdpTrainings[${index}][duration]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table2_2: `<tr><td><input type="text" name="moocCourses[${index}][title]" class="table-input"></td><td><input type="date" name="moocCourses[${index}][fromDate]" class="table-input"></td><td><input type="date" name="moocCourses[${index}][toDate]" class="table-input"></td><td><input type="number" name="moocCourses[${index}][duration]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table2_3: `<tr><td><input type="text" name="industrialTrainings[${index}][organization]" class="table-input"></td><td><input type="date" name="industrialTrainings[${index}][fromDate]" class="table-input"></td><td><input type="date" name="industrialTrainings[${index}][toDate]" class="table-input"></td><td><input type="number" name="industrialTrainings[${index}][duration]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_1: `<tr><td><input type="text" name="researchPublications[${index}][title]" class="table-input"></td><td><input type="text" name="researchPublications[${index}][journal]" class="table-input"></td><td><input type="text" name="researchPublications[${index}][issn]" class="table-input"></td><td><input type="number" name="researchPublications[${index}][year]" class="table-input"></td><td><input type="text" name="researchPublications[${index}][indexing]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_2: `<tr><td><input type="text" name="otherPublications[${index}][title]" class="table-input"></td><td><input type="text" name="otherPublications[${index}][bookTitle]" class="table-input"></td><td><input type="text" name="otherPublications[${index}][issn]" class="table-input"></td><td><input type="number" name="otherPublications[${index}][authorNo]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_3: `<tr><td><input type="text" name="sponsoredProjects[${index}][title]" class="table-input"></td><td><input type="text" name="sponsoredProjects[${index}][agency]" class="table-input"></td><td><input type="number" step="0.01" name="sponsoredProjects[${index}][amount]" class="table-input"></td><td><input type="text" name="sponsoredProjects[${index}][status]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_4: `<tr><td><input type="text" name="consultancyProjects[${index}][title]" class="table-input"></td><td><input type="text" name="consultancyProjects[${index}][agency]" class="table-input"></td><td><input type="number" step="0.01" name="consultancyProjects[${index}][amount]" class="table-input"></td><td><input type="text" name="consultancyProjects[${index}][outcome]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_5: `<tr><td><input type="text" name="patents[${index}][title]" class="table-input"></td><td><input type="text" name="patents[${index}][patentNo]" class="table-input"></td><td><input type="date" name="patents[${index}][date]" class="table-input"></td><td><input type="text" name="patents[${index}][status]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_6: `<tr><td><input type="text" name="researchGuidance[${index}][level]" class="table-input"></td><td><input type="number" name="researchGuidance[${index}][enrolled]" class="table-input"></td><td><input type="number" name="researchGuidance[${index}][submitted]" class="table-input"></td><td><input type="number" name="researchGuidance[${index}][awarded]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table3_7: `<tr><td><input type="text" name="awardsLectures[${index}][title]" class="table-input"></td><td><input type="text" name="awardsLectures[${index}][organizedBy]" class="table-input"></td><td><input type="text" name="awardsLectures[${index}][level]" class="table-input"></td><td><input type="date" name="awardsLectures[${index}][date]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table4_1: `<tr><td><input type="text" name="innovativeTeaching[${index}][course]" class="table-input"></td><td><input type="text" name="innovativeTeaching[${index}][method]" class="table-input"></td><td><input type="text" name="innovativeTeaching[${index}][remark]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table4_2: `<tr><td><input type="text" name="elearningMaterial[${index}][details]" class="table-input"></td><td><input type="text" name="elearningMaterial[${index}][remark]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            table5_1: `<tr><td><input type="text" name="otherInfo[${index}][details]" class="table-input"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`,
+            enclosureTable: `<tr><td><input type="text" name="enclosureNos[]" class="table-input"></td><td><input type="text" name="enclosureDescriptions[]" class="table-input"></td><td><input type="file" name="proofDocument" class="table-input" style="border:none;"></td><td><i class="material-icons red-text pointer" onclick="this.closest('tr').remove()">delete</i></td></tr>`
+        };
+
+        table.insertAdjacentHTML('beforeend', templates[tableId]);
+    }
+</script>
