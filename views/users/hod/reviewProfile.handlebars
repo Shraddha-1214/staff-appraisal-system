@@ -1,54 +1,165 @@
-<div class="container" style="margin-top: 30px; margin-bottom: 50px;">
-    <div class="card white" style="border-top: 8px solid #b71c1c; border-radius: 8px;">
-        <div class="card-content">
-            <span class="right badge blue white-text" style="font-size: 1rem; padding: 5px 15px;">Pending Approval</span>
-            <h4 style="color: #003366; font-weight: bold;">Review Appraisal: {{faculty.name}}</h4>
-            <p class="grey-text">Department: {{faculty.department}} | Academic Year: 2024-25</p>
-            <br>
+<style>
+    :root { --pbas-primary: #1a237e; --pbas-border: #dee2e6; --hod-eval: #f1f8e9; }
+    .review-card { border-radius: 8px; margin-bottom: 35px; border: 1px solid var(--pbas-border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .form-header { background: var(--pbas-primary); color: white; padding: 12px 20px; border-radius: 7px 7px 0 0; font-size: 0.95rem; }
+    .faculty-info { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e0e0e0; }
+    .eval-section { background: var(--hod-eval); padding: 20px; border: 1px solid #c5e1a5; border-radius: 8px; margin-top: 40px; }
+    .table-view { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
+    .table-view th, .table-view td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    .table-view th { background: #f8f9fa; color: #37474f; text-transform: uppercase; font-size: 0.75rem; }
+    .mark-input { width: 90px !important; border: 1px solid #558b2f !important; height: 32px !important; text-align: center; font-weight: bold; background: white !important; display: inline-block !important; }
+    .part-divider { margin: 50px 0 20px 0; border-left: 5px solid var(--pbas-primary); padding-left: 15px; color: var(--pbas-primary); font-weight: 700; text-transform: uppercase; }
+</style>
 
-            <ul class="collapsible popout">
-                <li>
-                    <div class="collapsible-header"><i class="material-icons blue-text">school</i>Part I: Teaching & Student Feedback</div>
-                    <div class="collapsible-body">
-                        <span>Faculty Claimed: <b>50 / 50 Points</b></span>
-                        <p>Includes System Programming (40/45 classes) and Student Feedback scores[cite: 9, 11].</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons green-text">biotech</i>Part II & III: Research & Trainings</div>
-                    <div class="collapsible-body">
-                        <span>Faculty Claimed: <b>35 Points</b></span>
-                        <p>Includes ATAL FDP and 4 Conference Publications[cite: 24, 36].</p>
-                    </div>
-                </li>
-            </ul>
+<div class="container" style="width: 96%;">
+    <div class="center-align">
+        <h4 class="indigo-text text-darken-4" style="font-weight: 800;">HOD Evaluation Portal</h4>
+        <p class="grey-text">Reviewing Faculty Appraisal for AY <b>{{appraisal.academicYear}}</b></p>
+    </div>
 
-            <form action="/users/hod/approve/{{faculty._id}}" method="POST" style="margin-top: 30px;">
-                <div class="input-field">
-                    <i class="material-icons prefix">comment</i>
-                    <textarea name="hod_remarks" class="materialize-textarea" placeholder="Add remarks for the faculty member..."></textarea>
-                    <label>HOD Remarks</label>
-                </div>
-
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col s6">
-                        <button type="submit" name="status" value="approved" class="btn-large green darken-2" style="width: 100%;">
-                            <i class="material-icons left">check_circle</i> APPROVE & SIGN
-                        </button>
-                    </div>
-                    <div class="col s6">
-                        <button type="submit" name="status" value="rejected" class="btn-large red darken-2" style="width: 100%;">
-                            <i class="material-icons left">assignment_return</i> RETURN FOR CORRECTION
-                        </button>
-                    </div>
-                </div>
-            </form>
+    <div class="faculty-info">
+        <div class="row" style="margin-bottom: 0;">
+            <div class="col s12 m6"><b>Faculty Name:</b> {{appraisal.facultyId.name}}</div>
+            <div class="col s12 m6"><b>Designation:</b> {{appraisal.facultyId.designation}}</div>
+            <div class="col s12 m6"><b>Department:</b> {{appraisal.facultyId.department}}</div>
+            <div class="col s12 m6"><b>Status:</b> <span class="chip indigo white-text">{{appraisal.status}}</span></div>
         </div>
     </div>
-</div>
 
-<script>
-    $(document).ready(function(){
-        $('.collapsible').collapsible();
-    });
-</script>
+    <form action="/hod/save-evaluation/{{appraisal._id}}" method="POST">
+
+        <h5 class="part-divider">Part I: AICTE 360 Degree Feedback</h5>
+        
+        <div class="card review-card">
+            <div class="form-header">1.1 Teaching Process & 1.2 Student Feedback</div>
+            <div class="card-content">
+                <h6>Teaching Process Data (Max 25 Pts):</h6>
+                <table class="table-view">
+                    <thead><tr><th>Sem</th><th>Course</th><th>Type</th><th>Scheduled</th><th>Held</th><th>Encl</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.teachingProcess}}
+                        <tr><td>{{this.semester}}</td><td>{{this.courseName}}</td><td>{{this.type}}</td><td>{{this.scheduledClasses}}</td><td>{{this.heldClasses}}</td><td>{{this.enclosureNo}}</td></tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <h6 style="margin-top:20px;">Student Feedback Data (Max 25 Pts):</h6>
+                <table class="table-view">
+                    <thead><tr><th>Sem</th><th>Course</th><th>Avg Feedback</th><th>Encl</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.studentFeedback}}
+                        <tr><td>{{this.semester}}</td><td>{{this.courseName}}</td><td>{{this.avgFeedback}}</td><td>{{this.enclosureNo}}</td></tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card review-card">
+            <div class="form-header">1.3 - 1.5 Activities (Dept/Inst/Society)</div>
+            <div class="card-content">
+                <table class="table-view">
+                    <thead><tr><th>Type</th><th>Sem</th><th>Activity Description</th><th>Encl</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.deptActivities}}<tr><td>Dept (Max 20)</td><td>{{this.semester}}</td><td>{{this.activity}}</td><td>{{this.enclosureNo}}</td></tr>{{/each}}
+                        {{#each appraisal.instActivities}}<tr><td>Inst (Max 10)</td><td>{{this.semester}}</td><td>{{this.activity}}</td><td>{{this.enclosureNo}}</td></tr>{{/each}}
+                        {{#each appraisal.societyActivities}}<tr><td>Society (Max 10)</td><td>{{this.semester}}</td><td>{{this.activity}}</td><td>{{this.enclosureNo}}</td></tr>{{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5 class="part-divider">Part II: Trainings Undergone</h5>
+        <div class="card review-card">
+            <div class="card-content">
+                <table class="table-view">
+                    <thead><tr><th>Category</th><th>Title / Organization</th><th>Period</th><th>Weeks</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.fdpTrainings}}<tr><td>FDP</td><td>{{this.title}} ({{this.organizedBy}})</td><td>{{this.fromDate}} to {{this.toDate}}</td><td>{{this.duration}}</td></tr>{{/each}}
+                        {{#each appraisal.moocCourses}}<tr><td>MOOC</td><td>{{this.title}}</td><td>{{this.fromDate}} to {{this.toDate}}</td><td>{{this.duration}}</td></tr>{{/each}}
+                        {{#each appraisal.industrialTrainings}}<tr><td>Industrial</td><td>{{this.organization}}</td><td>{{this.fromDate}} to {{this.toDate}}</td><td>{{this.duration}}</td></tr>{{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5 class="part-divider">Part III: Research & Academic Contributions</h5>
+        <div class="card review-card">
+            <div class="card-content">
+                <h6>3.1 & 3.2 Publications:</h6>
+                <table class="table-view">
+                    <thead><tr><th>Title</th><th>Journal/Conf/Book</th><th>ISSN/ISBN</th><th>Author No.</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.researchPublications}}<tr><td>{{this.title}}</td><td>{{this.journal}}</td><td>{{this.issn}}</td><td>{{this.authorNo}}</td></tr>{{/each}}
+                        {{#each appraisal.otherPublications}}<tr><td>{{this.title}}</td><td>{{this.bookTitle}}</td><td>{{this.issn}}</td><td>{{this.authorNo}}</td></tr>{{/each}}
+                    </tbody>
+                </table>
+                <h6 style="margin-top:20px;">3.3 - 3.7 Projects, Patents, Guidance & Awards:</h6>
+                <table class="table-view">
+                    <thead><tr><th>Type</th><th>Title / Agency / Level</th><th>Amount/Status</th><th>Outcome/Awarded</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.sponsoredProjects}}<tr><td>Project</td><td>{{this.title}} ({{this.agency}})</td><td>{{this.amount}}L</td><td>{{this.status}}</td></tr>{{/each}}
+                        {{#each appraisal.consultancyProjects}}<tr><td>Consultancy</td><td>{{this.title}} ({{this.agency}})</td><td>{{this.amount}}L</td><td>{{this.outcome}}</td></tr>{{/each}}
+                        {{#each appraisal.patents}}<tr><td>Patent</td><td>{{this.title}}</td><td>{{this.patentNo}}</td><td>{{this.status}}</td></tr>{{/each}}
+                        {{#each appraisal.researchGuidance}}<tr><td>Guidance</td><td>{{this.level}}</td><td>Enrolled: {{this.enrolled}}</td><td>Awarded: {{this.awarded}}</td></tr>{{/each}}
+                        {{#each appraisal.awardsLectures}}<tr><td>Awards/Lectures</td><td>{{this.title}} ({{this.organizedBy}})</td><td>{{this.level}}</td><td>{{this.date}}</td></tr>{{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5 class="part-divider">Part IV & V: Innovative Teaching & Other Info</h5>
+        <div class="card review-card">
+            <div class="card-content">
+                <table class="table-view">
+                    <thead><tr><th>Category</th><th>Details / Methodology</th><th>Remark</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.innovativeTeaching}}<tr><td>4.1 Methodology</td><td>{{this.course}}: {{this.method}}</td><td>{{this.remark}}</td></tr>{{/each}}
+                        {{#each appraisal.elearningMaterial}}<tr><td>4.2 E-Learning</td><td>{{this.details}}</td><td>{{this.remark}}</td></tr>{{/each}}
+                        {{#each appraisal.otherInfo}}<tr><td>5.1 Credentials</td><td>{{this.details}}</td><td>-</td></tr>{{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5 class="part-divider">Part VI: Document Verification</h5>
+        <div class="card review-card">
+            <div class="card-content">
+                <table class="table-view">
+                    <thead><tr><th style="width:15%">Encl No</th><th>Description</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {{#each appraisal.generalEnclosures}}
+                        <tr>
+                            <td><b>{{this.enclosureNo}}</b></td>
+                            <td>{{this.description}}</td>
+                            <td><a href="{{this.fileUrl}}" target="_blank" class="indigo-text"><i class="material-icons left">insert_drive_file</i> View Proof</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="eval-section">
+            <h5 class="green-text text-darken-3" style="font-weight: 700; margin-top:0;">Summary of AICTE 360 Degree Feedback Evaluation</h5>
+            <div class="row">
+                <div class="col s12 m4"><label>1.1 Teaching (Max 25):</label><br><input type="number" name="teachingMarks" class="mark-input" max="25" value="{{appraisal.hodEvaluations.teachingMarks}}"></div>
+                <div class="col s12 m4"><label>1.2 Feedback (Max 25):</label><br><input type="number" name="studentFeedbackMarks" class="mark-input" max="25" value="{{appraisal.hodEvaluations.studentFeedbackMarks}}"></div>
+                <div class="col s12 m4"><label>1.3 Dept (Max 20):</label><br><input type="number" name="deptActivityMarks" class="mark-input" max="20" value="{{appraisal.hodEvaluations.deptActivityMarks}}"></div>
+            </div>
+            <div class="row">
+                <div class="col s12 m4"><label>1.4 Inst (Max 10):</label><br><input type="number" name="instActivityMarks" class="mark-input" max="10" value="{{appraisal.hodEvaluations.instActivityMarks}}"></div>
+                <div class="col s12 m4"><label>1.5 Society (Max 10):</label><br><input type="number" name="societyMarks" class="mark-input" max="10" value="{{appraisal.hodEvaluations.societyMarks}}"></div>
+                <div class="col s12 m4"><label>1.6 ACR (Max 10):</label><br><input type="number" name="acrMarks" class="mark-input" max="10" value="{{appraisal.hodEvaluations.acrMarks}}"></div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <div class="col s12">
+                    <label><b>HOD Overall Remarks & Recommendations:</b></label>
+                    <textarea name="overallRemarks" class="materialize-textarea" placeholder="Enter feedback for faculty member...">{{appraisal.hodEvaluations.overallRemarks}}</textarea>
+                </div>
+            </div>
+            <div class="center-align" style="margin-top:30px;">
+                <button type="submit" class="btn-large green darken-2 waves-effect waves-light">Submit Final Evaluation to Principal</button>
+            </div>
+        </div>
+    </form>
+</div>

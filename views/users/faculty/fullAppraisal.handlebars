@@ -465,6 +465,20 @@
     </div>
 </div>
 
+<div class="card section-card red lighten-5" style="border: 2px solid #d32f2f !important; margin-top: 50px;">
+    <div class="card-content center-align">
+        <h5 class="red-text text-darken-2" style="font-weight: 700;">Final Submission</h5>
+        <p>Before submitting, please ensure all parts (I-V) are saved and all necessary documents are uploaded in Part VI[cite: 58]. Once submitted, you will not be able to edit the form unless the HOD sends it back.</p>
+        
+        <form action="/appraisal/final-submit" method="POST" style="margin-top: 20px;">
+            <button type="submit" class="btn-large red darken-2 waves-effect waves-light" 
+                onclick="return confirm('Are you sure you want to submit your appraisal? This will send it to the HOD for review.')">
+                <i class="material-icons left">send</i> Final Submit to HOD
+            </button>
+        </form>
+    </div>
+</div>
+
 <script>
     function addRow(tableId) {
         const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];

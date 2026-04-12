@@ -45,3 +45,19 @@
         </div>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">Appraisal Status: 
+            <span class="chip {{#if_eq status 'Submitted'}}orange white-text{{/if_eq}} {{#if_eq status 'Reviewed'}}green white-text{{/if_eq}}">
+                {{status}}
+            </span>
+        </span>
+        
+        {{#if_eq status 'Draft'}}
+            <p>Your appraisal is still in progress. Please complete all sections and click Final Submit.</p>
+        {{else}}
+            <p>Your appraisal has been sent for review. You can no longer edit it.</p>
+        {{/if_eq}}
+    </div>
+</div>

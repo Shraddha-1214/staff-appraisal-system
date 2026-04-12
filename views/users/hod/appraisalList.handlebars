@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col s12">
             <h4 class="indigo-text text-darken-4">Department Faculty Appraisals</h4>
-            <p>Reviewing appraisals for: <b>{{dept}} Department</b></p>
+            <p>Reviewing appraisals for: <b>{{user.department}} Department</b></p>
             <br>
 
             <table class="highlight centered bordered responsive-table white card" style="border-radius: 10px; overflow: hidden;">
@@ -18,8 +18,10 @@
                     {{#if appraisals.length}}
                         {{#each appraisals}}
                         <tr>
-                            <td><b style="color: #1a237e;">{{this.user.name}}</b></td>
-                            <td>{{this.academic_year}}</td>
+                            <td><b style="color: #1a237e;">{{this.facultyId.name}}</b></td>
+                            
+                            <td>{{this.academicYear}}</td>
+                            
                             <td>
                                 {{#if_eq this.status 'Submitted'}}
                                     <span class="badge orange white-text" style="float:none; border-radius:4px;">Pending Review</span>
@@ -28,8 +30,8 @@
                                 {{/if_eq}}
                             </td>
                             <td>
-                                <a href="/summary/review/{{this.user._id}}/{{this.academic_year}}" 
-                                   class="btn waves-effect waves-light indigo darken-4 {{#if_eq this.status 'Draft'}}disabled{{/if_eq}}">
+                                <a href="/users/hod/review/{{this._id}}" 
+                                   class="btn waves-effect waves-light indigo darken-4">
                                     <i class="material-icons left">visibility</i> REVIEW
                                 </a>
                             </td>

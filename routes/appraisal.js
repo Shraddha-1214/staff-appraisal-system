@@ -77,4 +77,25 @@ router.post('/save-enclosures', ensureAuthenticated, upload, (req, res) => {
     saveSection(req, res, 'generalEnclosures', data, 'All Documents Uploaded!');
 });
 
+
+// POST: Final Submit Appraisal
+router.post('/final-submit', ensureAuthenticated, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const year = res.locals.year;
+
+        // Update status to 'Submitted' [cite: 64]
+        await Appraisal.findOneAndUpdate(
+            { facultyId: userId, academicYear: year },
+            { $set: { status: 'Submitted' } }
+        );
+
+        req.flash('success_msg', 'Appraisal submitted successfully to HOD!');
+        res.redirect('/users/faculty/facultyOverview');
+    } catch (err) {
+        req.flash('error_msg', 'Submission failed. Please try again.');
+        res.redirect('/appraisal/form');
+    }
+});
+
 module.exports = router;

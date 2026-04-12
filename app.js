@@ -49,8 +49,10 @@ app.use((req, res, next) => {
 // 3. ROUTES
 const users = require('./routes/users');
 const appraisal = require('./routes/appraisal');
+const hod = require('./routes/hod');
 app.use('/users', users);
 app.use('/appraisal', appraisal);
+app.use('/hod', hod);
 
 app.get('/', (req, res) => res.render('index'));
 
